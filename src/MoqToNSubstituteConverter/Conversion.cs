@@ -1,4 +1,8 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MoqToNSubstituteConverter;
 
@@ -31,7 +35,43 @@ public class Conversion
 
         //Process Setup
         convertedCode = convertedCode.Replace("It.IsAny", "Arg.Any");
-        convertedCode = convertedCode.Replace(".Setup(", "");
+        //convertedCode = convertedCode.Replace(".Setup(", "");
+
+        string setupPattern = @"\.Setup\((.*?)\=\>";
+
+        Match setupMatch = Regex.Match(convertedCode, setupPattern);
+
+        if (setupMatch.Success)
+        {
+            string extractedText = setupMatch.Groups[1].Value.Trim();
+            convertedCode = convertedCode.Replace(".Setup(" + extractedText + " => " + extractedText, "");
+            //Find and remove the last closed bracket
+            int open = 0;
+            StringBuilder processedString = new();
+            foreach (char c in convertedCode)
+            {
+                if (c == '(')
+                {
+                    open++;
+                }
+                else if (c == ')')
+                {
+                    open--;
+                }
+                //Only add the string back if there is a matching bracket
+                if (open >= 0)
+                {
+                    processedString.Append(c);
+                }
+                else if (c == ')')
+                {
+                    //get open count back to 0
+                    open++;
+                }
+            }
+            convertedCode = processedString.ToString();
+        }
+
 
         //Return the final conversion result, with the original (pipeline) yaml, processed (actions) yaml, and any comments
         return new ConversionResponse
