@@ -29,8 +29,9 @@ public class Conversion
             convertedCode = convertedCode.Replace("Mock<" + variableText + ">", variableText);
         }
 
-
-
+        //Process Setup
+        convertedCode = convertedCode.Replace("It.IsAny", "Arg.Any");
+        convertedCode = convertedCode.Replace(".Setup(", "");
 
         //Return the final conversion result, with the original (pipeline) yaml, processed (actions) yaml, and any comments
         return new ConversionResponse
