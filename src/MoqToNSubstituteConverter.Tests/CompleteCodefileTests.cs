@@ -29,7 +29,7 @@ namespace MyProject.Tests
         {
             //Arrange
             Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
-            MyStorageTable context = new MyStorageTable(mockConfiguration.Object);
+            MyStorageTable context = new(mockConfiguration.Object);
             Mock<IMyStorageTable> mock = new Mock<IMyStorageTable>();
             mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));
             MyController controller = new MyController(mock.Object);
@@ -72,7 +72,7 @@ namespace MyProject.Tests
             //Arrange
             IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
             MyStorageTable context = new(mockConfiguration);
-            var mock = Substitute.For<IMyStorageTable>();
+            IMyStorageTable mock = Substitute.For<IMyStorageTable>();
             mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(true));
             MyController controller = new MyController(mock);
             string name = ""abc"";

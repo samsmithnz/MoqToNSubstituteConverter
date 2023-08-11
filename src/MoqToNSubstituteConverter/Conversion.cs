@@ -72,7 +72,6 @@ public class Conversion
             convertedCode = processedString.ToString();
         }
 
-
         //Return the final conversion result, with the original (pipeline) yaml, processed (actions) yaml, and any comments
         return new ConversionResponse
         {
