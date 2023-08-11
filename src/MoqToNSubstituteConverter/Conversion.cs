@@ -29,11 +29,6 @@ public class Conversion
             convertedCode = convertedCode.Replace("Mock<" + variableText + ">", variableText);
         }
 
-        //convertedCode = convertedCode.Replace(convertedCode, convertedCode.Replace("Mock<", "Substitute.For<"));
-
-        //convertedCode = convertedCode.Replace("Mock<", "");
-
-        //replace Mock<T> with Substitute.For<T>
 
 
 
