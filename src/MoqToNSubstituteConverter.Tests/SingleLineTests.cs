@@ -37,7 +37,7 @@ Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
 
             //Assert
             string expected = @"
-IConfiguration mockConfiguration = new Substitute.For<IConfiguration>();
+IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
 ";
 
             Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
