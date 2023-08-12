@@ -24,6 +24,9 @@ public class Conversion
             //process setup
             processedLine = ProcessSetup(processedLine);
 
+            //process verify
+            processedLine = ProcessVerify(processedLine);
+
             //Feed the line back into the final result
             processedCode.AppendLine(processedLine);
         }
@@ -68,6 +71,47 @@ public class Conversion
         {
             string extractedText = setupMatch.Groups[1].Value.Trim();
             code = code.Replace(".Setup(" + extractedText + " => " + extractedText, "");
+            //Find and remove the last closed bracket
+            int open = 0;
+            StringBuilder processedString = new();
+            foreach (char c in code)
+            {
+                if (c == '(')
+                {
+                    open++;
+                }
+                else if (c == ')')
+                {
+                    open--;
+                }
+                //Only add the string back if there is a matching bracket
+                if (open >= 0)
+                {
+                    processedString.Append(c);
+                }
+                else if (c == ')')
+                {
+                    //get open count back to 0
+                    open++;
+                }
+            }
+            code = processedString.ToString();
+        }
+        return code;
+    }
+
+    private static string ProcessVerify(string code)
+    {
+        string verifyPattern = @"\.Verify\((.*?)\=\>";
+        //string setupPattern = @"\.Verify\((.*?), Times\.Once\(\)\)";
+
+        Match setupMatch = Regex.Match(code, verifyPattern);
+
+        if (setupMatch.Success)
+        {
+            string extractedText = setupMatch.Groups[1].Value.Trim();
+            code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received()");
+            code = code.Replace(", Times.Once)", "");
             //Find and remove the last closed bracket
             int open = 0;
             StringBuilder processedString = new();
