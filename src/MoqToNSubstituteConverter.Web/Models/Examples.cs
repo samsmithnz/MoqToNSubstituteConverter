@@ -45,28 +45,32 @@ namespace MyProject.Tests
 
         public static string SimpleExample1()
         {
-            string code = @"using Moq;";
+            string code = @"
+using Moq;";
 
             return code;
         }
 
         public static string SimpleExample2()
         {
-            string code = @"Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();";
+            string code = @"
+Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();";
 
             return code;
         }
 
         public static string SimpleExample3()
         {
-            string code = @"mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));";
+            string code = @"
+mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));";
 
             return code;
         }
 
         public static string SimpleExample4()
         {
-            string code = @"mock.Verify(x => x.Method(), Times.Once);";
+            string code = @"
+mock.Verify(x => x.Method(), Times.Once);";
 
             return code;
         }
