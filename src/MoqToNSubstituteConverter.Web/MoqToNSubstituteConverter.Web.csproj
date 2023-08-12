@@ -4,6 +4,8 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationInsightsResourceId>/subscriptions/65b8d298-e5bd-4735-912e-8b9c510c4e00/resourceGroups/MoqToNSubstitute/providers/microsoft.insights/components/MoqToNSubstitute-AppInsights</ApplicationInsightsResourceId>
+		<UserSecretsId>d6239b4a-249d-4f1c-9d63-864012b6c860</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
