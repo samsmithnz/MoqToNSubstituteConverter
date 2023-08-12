@@ -40,7 +40,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: webapp
-        path: src/MoqToNSubstituteConverter.Web/bin/Release/net7.0
+        path: src/MoqToNSubstituteConverter.Web/bin/Release/net7.0/publish
 
 
   #Deploy the artifacts to Azure
