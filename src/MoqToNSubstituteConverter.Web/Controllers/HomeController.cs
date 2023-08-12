@@ -6,12 +6,12 @@ namespace MoqToNSubstituteConverter.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
         //        private readonly TelemetryClient _telemetry;
 
-        public HomeController(ILogger<HomeController> logger)//, TelemetryClient telemetry)
+        public HomeController()//ILogger<HomeController> logger)//, TelemetryClient telemetry)
         {
-            _logger = logger;
+            //_logger = logger;
             //           _telemetry = telemetry;
         }
 
