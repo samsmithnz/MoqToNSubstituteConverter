@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build job
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     outputs:
       Version: ${{ steps.gitversion.outputs.SemVer }}
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
