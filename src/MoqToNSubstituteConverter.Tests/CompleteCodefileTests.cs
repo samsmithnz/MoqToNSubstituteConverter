@@ -40,7 +40,7 @@ namespace MyProject.Tests
             bool result = await controller.CheckResult(name, environment);
 
             //Assert
-            Assert.IsTrue(result == true);
+            Assert.IsTrue(result);
         }
     }
 }";
@@ -81,7 +81,7 @@ namespace MyProject.Tests
             bool result = await controller.CheckResult(name, environment);
 
             //Assert
-            Assert.IsTrue(result == true);
+            Assert.IsTrue();
         }
     }
 }
