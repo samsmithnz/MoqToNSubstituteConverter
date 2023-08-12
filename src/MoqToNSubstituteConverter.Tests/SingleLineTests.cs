@@ -97,6 +97,25 @@ mock.Received().Method();
 
             Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
         }
+
+        [TestMethod]
+        public void VerifyWithMoreTimesTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string code = @"
+mock.Verify(_ => _.Transform(It.IsAny<string>()), Times.Exactly(3));";
+
+            //Act
+            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"
+mock.Received(3).Transform(Arg.Any<string>());
+";
+
+            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+        }
        
     }
 }

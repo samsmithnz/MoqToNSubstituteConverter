@@ -70,7 +70,8 @@ mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Ret
         public static string SimpleExample4()
         {
             string code = @"
-mock.Verify(x => x.Method(), Times.Once);";
+mock.Verify(x => x.Method(), Times.Once);
+mock.Verify(_ => _.Transform(It.IsAny<string>()), Times.Exactly(3));";
 
             return code;
         }
