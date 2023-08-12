@@ -78,6 +78,25 @@ mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(t
 
             Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
         }
+
+        [TestMethod]
+        public void VerifyTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string code = @"
+mock.Verify(x => x.Method(), Times.Once);";
+
+            //Act
+            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"
+mock.Received().Method();
+";
+
+            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+        }
        
     }
 }
