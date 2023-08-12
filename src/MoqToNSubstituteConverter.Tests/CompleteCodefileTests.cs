@@ -43,8 +43,7 @@ namespace MyProject.Tests
             Assert.IsTrue(result == true);
         }
     }
-}
-";
+}";
 
         //Act
         ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
