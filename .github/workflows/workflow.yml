@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build job
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     outputs:
       Version: ${{ steps.gitversion.outputs.SemVer }}
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
@@ -41,3 +41,41 @@ jobs:
       with:
         name: drop
         path: src/MoqToNSubstituteConverter/bin/Release
+
+
+  #Deploy the artifacts to Azure
+  deploy:
+    runs-on: ubuntu-latest
+    needs: 
+    - build 
+    #Only deploy if running off the main branch - we don't want to deploy off feature branches
+    if: github.ref == 'refs/heads/main'
+    steps:    
+    - name: Display GitVersion outputs
+      run: |
+        echo "Version: ${{ needs.build.outputs.Version }}" 
+        echo "CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSource }}" 
+    - name: Log into Azure # Login with the secret SP details
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_SP }}
+    - name: Download webapp artifact #Download the artifacts from GitHub
+      uses: actions/download-artifact@v3.0.2
+      with:
+        name: drop
+        path: drop
+    - name: Deploy web service to Azure WebApp #Deploy service and website to Azure staging slots
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: MoqToNSubstitute
+        package: drop
+        slot-name: production      
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only create a release if there has been a commit/version change
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ needs.build.outputs.Version }}
+        release_name: Release ${{ needs.build.outputs.Version }} 

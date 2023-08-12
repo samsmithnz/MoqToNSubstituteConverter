@@ -10,8 +10,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2575E5A3-5D6D-451C-81E9-3528B48E5FFA}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\dependabot.yml = ..\.github\dependabot.yml
+		..\README.md = ..\README.md
 		..\.github\workflows\workflow.yml = ..\.github\workflows\workflow.yml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoqToNSubstituteConverter.Web", "MoqToNSubstituteConverter.Web\MoqToNSubstituteConverter.Web.csproj", "{CE89C7E4-E4CE-4F09-9A76-F57929E4361F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +30,15 @@ Global
 		{A9FAD1FF-8686-4F2D-9880-B6A5C1FB4DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9FAD1FF-8686-4F2D-9880-B6A5C1FB4DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9FAD1FF-8686-4F2D-9880-B6A5C1FB4DFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE89C7E4-E4CE-4F09-9A76-F57929E4361F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE89C7E4-E4CE-4F09-9A76-F57929E4361F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE89C7E4-E4CE-4F09-9A76-F57929E4361F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE89C7E4-E4CE-4F09-9A76-F57929E4361F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA1985DE-0A28-4FF3-9CA4-5C59D5FA8827}
 	EndGlobalSection
 EndGlobal
