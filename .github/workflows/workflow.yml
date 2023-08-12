@@ -35,12 +35,12 @@ jobs:
     - name: .NET test
       run: dotnet test src/MoqToNSubstituteConverter.Tests/MoqToNSubstituteConverter.Tests.csproj -c Release
     - name: .NET publish
-      run: dotnet publish src/MoqToNSubstituteConverter/MoqToNSubstituteConverter.csproj -c Release -p:Version='${{ steps.gitversion.outputs.SemVer }}'
+      run: dotnet publish src/MoqToNSubstituteConverter.Web/MoqToNSubstituteConverter.Web.csproj -c Release -p:Version='${{ steps.gitversion.outputs.SemVer }}'
     - name: Upload package back to GitHub
       uses: actions/upload-artifact@v3
       with:
         name: drop
-        path: src/MoqToNSubstituteConverter/bin/Release
+        path: src/MoqToNSubstituteConverter.Web/bin/Release
 
 
   #Deploy the artifacts to Azure

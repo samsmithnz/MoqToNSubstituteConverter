@@ -1,5 +1,4 @@
-﻿using Microsoft.ApplicationInsights;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MoqToNSubstituteConverter.Web.Models;
 using System.Diagnostics;
 
@@ -20,8 +19,8 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         [HttpHead]
         public IActionResult Index()
         {
-            ConversionResponse gitHubResult = new();
-            return View(viewName: "Index", model: (gitHubResult, false));
+            ConversionResponse result = new();
+            return View(viewName: "Index", model: result);
         }
 
         [HttpPost]

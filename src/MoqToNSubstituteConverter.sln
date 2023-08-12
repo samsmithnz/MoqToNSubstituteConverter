@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2575E5A3-5D6D-451C-81E9-3528B48E5FFA}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\dependabot.yml = ..\.github\dependabot.yml
+		..\GitVersion.yml = ..\GitVersion.yml
 		..\README.md = ..\README.md
 		..\.github\workflows\workflow.yml = ..\.github\workflows\workflow.yml
 	EndProjectSection

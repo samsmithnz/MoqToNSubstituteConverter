@@ -1,7 +1,7 @@
 ﻿@using System.Reflection;
 @using System.Diagnostics;
 @using System.IO;
-@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@* @inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet *@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +10,7 @@
     <title>@ViewData["Title"] - Moq to NSubstitute</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    @Html.Raw(JavaScriptSnippet.FullScript)
+    @* @Html.Raw(JavaScriptSnippet.FullScript) *@
 </head>
 <body>
     <header>
