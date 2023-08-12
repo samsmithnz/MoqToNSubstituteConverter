@@ -1,8 +1,5 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MoqToNSubstituteConverter;
 
@@ -35,8 +32,6 @@ public class Conversion
 
         //Process Setup
         convertedCode = convertedCode.Replace("It.IsAny", "Arg.Any");
-        //convertedCode = convertedCode.Replace(".Setup(", "");
-
         string setupPattern = @"\.Setup\((.*?)\=\>";
 
         Match setupMatch = Regex.Match(convertedCode, setupPattern);
