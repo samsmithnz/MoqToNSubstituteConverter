@@ -81,7 +81,7 @@ namespace MyProject.Tests
             bool result = await controller.CheckResult(name, environment);
 
             //Assert
-            Assert.IsTrue();
+            Assert.IsTrue(result);
         }
     }
 }
