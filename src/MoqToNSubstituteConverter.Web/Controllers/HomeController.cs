@@ -1,20 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Mvc;
 using MoqToNSubstituteConverter.Web.Models;
 using System.Diagnostics;
-using Microsoft.ApplicationInsights;
-using MoqToNSubstituteConverter;
 
 namespace MoqToNSubstituteConverter.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly TelemetryClient _telemetry;
+        //        private readonly TelemetryClient _telemetry;
 
-        public HomeController(ILogger<HomeController> logger, TelemetryClient telemetry)
+        public HomeController(ILogger<HomeController> logger)//, TelemetryClient telemetry)
         {
             _logger = logger;
-            _telemetry = telemetry;
+            //           _telemetry = telemetry;
         }
 
         [HttpGet]
