@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Pipelines To Actions</title>
+    <title>@ViewData["Title"] - Moq to NSubstitute</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     @Html.Raw(JavaScriptSnippet.FullScript)
@@ -59,10 +59,9 @@
                 DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 string appAssemblyLastBuildDate = dt.AddSeconds(secondsSince1970).ToString("dd-MMM-yyyy hh:mm:sstt");
 
-                string version = Assembly.LoadFile(Assembly.GetEntryAssembly()?.Location.Replace("PipelinesToActionsWeb", "AzurePipelinesToGitHubActionsConverter.Core")).GetName().Version.ToString();
-
+                string version = Assembly.LoadFile(Assembly.GetEntryAssembly()?.Location.Replace("MoqToNSubstituteConverter.Web", "MoqToNSubstituteConverter")).GetName().Version.ToString();
             }
-            &copy; @DateTime.Now.Year - Pipelines To Actions - (Last built: @appAssemblyLastBuildDate, using <a href="https://github.com/samsmithnz/AzurePipelinesToGitHubActionsConverter">AzurePipelinesToGitHubActionsConverter</a>: version @version)
+            &copy; @DateTime.Now.Year - Moq to NSubstitute - (Last built: @appAssemblyLastBuildDate, using <a href="https://github.com/samsmithnz/AzurePipelinesToGitHubActionsConverter">AzurePipelinesToGitHubActionsConverter</a>: version @version)
         </div>
     </footer>
     <script src="~/lib/jquery/jquery.min.js"></script>

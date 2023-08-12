@@ -29,7 +29,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Index(string code)
         {
             Conversion conversion = new();
-            (ConversionResponse, bool) result = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
             return View(model: result);
         }
 
@@ -39,8 +39,8 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         {
             string code = Examples.Example1();
             Conversion conversion = new();
-            (ConversionResponse, bool) gitHubResult = ProcessConversion(code);
-            return View(viewName: "Index", model: gitHubResult);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            return View(viewName: "Index", model: result);
         }
 
         public IActionResult Privacy()
