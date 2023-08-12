@@ -1,29 +1,36 @@
-﻿<!DOCTYPE html>
+﻿@using System.Reflection;
+@using System.Diagnostics;
+@using System.IO;
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MoqToNSubstituteConverter.Web</title>
+    <title>@ViewData["Title"] - Pipelines To Actions</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MoqToNSubstituteConverter.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MoqToNSubstituteConverter.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Convert Pipelines to Actions</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="https://github.com/samsmithnz/AzurePipelinesToGitHubActionsConverter/releases" target="new">Latest updates</a>
                         </li>
                     </ul>
                 </div>
@@ -38,12 +45,29 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - MoqToNSubstituteConverter.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @{
+                //Last build time
+                const int peHeaderOffset = 60;
+                const int linkerTimestampOffset = 8;
+                byte[] bytes = new byte[2048];
+                using (FileStream file = new FileStream(Assembly.GetEntryAssembly()?.Location ?? "", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    file.Read(bytes, 0, bytes.Length);
+                }
+                Int32 headerPos = BitConverter.ToInt32(bytes, peHeaderOffset);
+                Int32 secondsSince1970 = BitConverter.ToInt32(bytes, headerPos + linkerTimestampOffset);
+                DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                string appAssemblyLastBuildDate = dt.AddSeconds(secondsSince1970).ToString("dd-MMM-yyyy hh:mm:sstt");
+
+                string version = Assembly.LoadFile(Assembly.GetEntryAssembly()?.Location.Replace("PipelinesToActionsWeb", "AzurePipelinesToGitHubActionsConverter.Core")).GetName().Version.ToString();
+
+            }
+            &copy; @DateTime.Now.Year - Pipelines To Actions - (Last built: @appAssemblyLastBuildDate, using <a href="https://github.com/samsmithnz/AzurePipelinesToGitHubActionsConverter">AzurePipelinesToGitHubActionsConverter</a>: version @version)
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
