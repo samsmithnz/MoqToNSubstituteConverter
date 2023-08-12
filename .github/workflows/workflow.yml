@@ -39,7 +39,7 @@ jobs:
     - name: Upload package back to GitHub
       uses: actions/upload-artifact@v3
       with:
-        name: drop
+        name: webapp
         path: src/MoqToNSubstituteConverter.Web/bin/Release
 
 
@@ -62,13 +62,13 @@ jobs:
     - name: Download webapp artifact #Download the artifacts from GitHub
       uses: actions/download-artifact@v3.0.2
       with:
-        name: drop
-        path: drop
+        name: webapp
+        path: webapp
     - name: Deploy web service to Azure WebApp #Deploy service and website to Azure staging slots
       uses: Azure/webapps-deploy@v2
       with:
         app-name: MoqToNSubstitute
-        package: drop
+        package: webapp
         slot-name: production      
     - name: Create Release
       id: create_release
