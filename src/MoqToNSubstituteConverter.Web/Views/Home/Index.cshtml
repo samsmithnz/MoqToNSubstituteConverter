@@ -21,7 +21,7 @@
                 <div class="col-sm-6" style="height:60vh;">
                     <div class="codeHeader lang-html" data-bi-name="code-header">
                         <span class="language">NSubstitute code</span>
-                        <button class="action" data-bi-name="copy" onclick="selectElementContentsById('txtActionsYAML')"><svg class="vector-icon" focusable="false" viewBox="0 0 14 14"><path d="M13 6.8V14H4v-3H0V0h5.2l3 3h1L13 6.8zM4 3h2.8l-2-2H1v9h3V3zm8 5H8V4H5v9h7V8zM9 7h2.8L9 4.2V7z"></path></svg> Copy</button>
+                        <button class="action" data-bi-name="copy" onclick="selectElementContentsById('txtNSubstituteCode')"><svg class="vector-icon" focusable="false" viewBox="0 0 14 14"><path d="M13 6.8V14H4v-3H0V0h5.2l3 3h1L13 6.8zM4 3h2.8l-2-2H1v9h3V3zm8 5H8V4H5v9h7V8zM9 7h2.8L9 4.2V7z"></path></svg> Copy</button>
                     </div>
                     <pre id="txtNSubstituteCode" style="height: 90%; text-align: left;">
                         @Model.ConvertedCode
@@ -51,19 +51,18 @@
 
                 </div>
             </div>
-@*             <div class="row">
+            <div class="row">
                 <div class="col-sm-12" style="margin-bottom: 8px">
-                    <button asp-controller="home" asp-action="AntExample">Ant</button>&nbsp;
-                    <button asp-controller="home" asp-action="MavenExample">Maven</button>&nbsp;
-                    <button asp-controller="home" asp-action="NodeExample">NodeJS</button>&nbsp;
-                    <button asp-controller="home" asp-action="PythonExample">Python</button>&nbsp;
-                    <button asp-controller="home" asp-action="RubyExample">Ruby</button>&nbsp;
+                    <button asp-controller="home" asp-action="SimpleExample1">Simple Example 1</button>&nbsp;
+                    <button asp-controller="home" asp-action="SimpleExample2">Simple Example 2</button>&nbsp;
+                    <button asp-controller="home" asp-action="SimpleExample3">Simple Example 3</button>&nbsp;
+                    <button asp-controller="home" asp-action="SimpleExample4">Simple Example 4</button>&nbsp;
                 </div>
-            </div> *@
+            </div>
         </div>
         <p>
             <b>No code is captured or stored</b> in the process of the conversion. @* Note that unknown examples are thrown as exceptions and are captured in Application Insights to help me identify and solve new, unknown scenarios *@<br />
-            The source code for this <a href="https://github.com/samsmithnz/MoqToNSubstituteConverter" target="_blank">website</a>, is stored in GitHub and is fully open source.
+            The source code for this <a href="https://github.com/samsmithnz/MoqToNSubstituteConverter" target="_blank">website</a> is stored in GitHub and is fully open source.
             <br /><br />
             If you run into a bug, please <a href="https://github.com/samsmithnz/MoqToNSubstituteConverter/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">post an issue</a>!
         </p>

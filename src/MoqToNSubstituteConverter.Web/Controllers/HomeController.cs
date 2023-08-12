@@ -6,12 +6,12 @@ namespace MoqToNSubstituteConverter.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
         //        private readonly TelemetryClient _telemetry;
 
-        public HomeController(ILogger<HomeController> logger)//, TelemetryClient telemetry)
+        public HomeController()//ILogger<HomeController> logger)//, TelemetryClient telemetry)
         {
-            _logger = logger;
+            //_logger = logger;
             //           _telemetry = telemetry;
         }
 
@@ -24,10 +24,10 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string code)
+        public IActionResult Index(string txtMoqCode)
         {
             Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(txtMoqCode);
             return View(model: result);
         }
 
@@ -36,6 +36,46 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Example1()
         {
             string code = Examples.Example1();
+            Conversion conversion = new();
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            return View(viewName: "Index", model: result);
+        }
+
+        [HttpGet]
+        [HttpPost]
+        public IActionResult SimpleExample1()
+        {
+            string code = Examples.SimpleExample1();
+            Conversion conversion = new();
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            return View(viewName: "Index", model: result);
+        }
+
+        [HttpGet]
+        [HttpPost]
+        public IActionResult SimpleExample2()
+        {
+            string code = Examples.SimpleExample2();
+            Conversion conversion = new();
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            return View(viewName: "Index", model: result);
+        }
+
+        [HttpGet]
+        [HttpPost]
+        public IActionResult SimpleExample3()
+        {
+            string code = Examples.SimpleExample3();
+            Conversion conversion = new();
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            return View(viewName: "Index", model: result);
+        }
+
+        [HttpGet]
+        [HttpPost]
+        public IActionResult SimpleExample4()
+        {
+            string code = Examples.SimpleExample4();
             Conversion conversion = new();
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
             return View(viewName: "Index", model: result);
