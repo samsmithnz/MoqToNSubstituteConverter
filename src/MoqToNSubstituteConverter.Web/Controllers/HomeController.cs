@@ -27,7 +27,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Index(string txtMoqCode)
         {
             Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(txtMoqCode);
             return View(model: result);
         }
 
