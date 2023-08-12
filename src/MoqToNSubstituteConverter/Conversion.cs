@@ -31,7 +31,7 @@ public class Conversion
             processedCode.AppendLine(processedLine);
         }
   
-        //Return the final conversion result, with the original (pipeline) yaml, processed (actions) yaml, and any comments
+        //Return the final conversion result, with the original code, processed (actions) yaml, and any comments
         return new ConversionResponse
         {
             OriginalCode = code,

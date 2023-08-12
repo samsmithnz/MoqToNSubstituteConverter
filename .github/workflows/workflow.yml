@@ -68,7 +68,7 @@ jobs:
       uses: Azure/webapps-deploy@v2
       with:
         app-name: MoqToNSubstitute
-        package: webapp
+        package: drop
         slot-name: production      
     - name: Create Release
       id: create_release
