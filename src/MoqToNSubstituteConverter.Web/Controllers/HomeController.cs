@@ -24,7 +24,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string code)
+        public IActionResult Index(string txtMoqCode)
         {
             Conversion conversion = new();
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
