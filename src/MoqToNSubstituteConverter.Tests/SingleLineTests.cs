@@ -9,8 +9,7 @@
             //Arrange
             Conversion conversion = new();
             string code = @"
-using Moq;
-";
+using Moq;";
 
             //Act
             ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
@@ -29,8 +28,7 @@ using NSubstitute;
             //Arrange
             Conversion conversion = new();
             string code = @"
-Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
-";
+Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();";
 
             //Act
             ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
@@ -49,8 +47,7 @@ IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
             //Arrange
             Conversion conversion = new();
             string code = @"
-MyStorageTable context = new MyStorageTable(mockConfiguration.Object);
-";
+MyStorageTable context = new MyStorageTable(mockConfiguration.Object);";
 
             //Act
             ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
@@ -69,8 +66,7 @@ MyStorageTable context = new MyStorageTable(mockConfiguration);
             //Arrange
             Conversion conversion = new();
             string code = @"
-mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));
-";
+mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));";
 
             //Act
             ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);

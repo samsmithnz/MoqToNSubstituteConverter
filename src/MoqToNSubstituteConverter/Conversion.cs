@@ -8,42 +8,70 @@ public class Conversion
     public ConversionResponse ConvertMoqToNSubstitute(string code)
     {
         List<string> stepComments = new();
+        StringBuilder processedCode = new();
 
-        //Replace using
-        string convertedCode = code.Replace("using Moq;", "using NSubstitute;");
+        foreach (string line in code.Split(Environment.NewLine))
+        {
+            //Replace using
+            string processedLine = line.Replace("using Moq;", "using NSubstitute;");
 
-        //Remove .Object
-        convertedCode = convertedCode.Replace(".Object", "");
+            //Remove .Object
+            processedLine = processedLine.Replace(".Object", "");
 
+            //process variable declarations
+            processedLine = ProcessVariableDeclaration(processedLine);
+
+            //process setup
+            processedLine = ProcessSetup(processedLine);
+
+            //Feed the line back into the final result
+            processedCode.AppendLine(processedLine);
+        }
+  
+        //Return the final conversion result, with the original (pipeline) yaml, processed (actions) yaml, and any comments
+        return new ConversionResponse
+        {
+            OriginalCode = code,
+            ConvertedCode = processedCode.ToString(),
+            Comments = stepComments
+        };
+    }
+
+    private static string ProcessVariableDeclaration(string code)
+    {
         //Update variable declarations
-        convertedCode = convertedCode.Replace("new Mock<", "Substitute.For<");
+        code = code.Replace("new Mock<", "Substitute.For<");
 
         //Find the interface
         string pattern = @"Substitute.For\<(.*?)\>";
-        MatchCollection matches = Regex.Matches(convertedCode, pattern);
+        MatchCollection matches = Regex.Matches(code, pattern);
 
-        // Process each match and perform replacements
+        // Process each match and perform replacements on the explict variable declaration (if this is a var - it doesn't do anything)
         foreach (Match match in matches)
         {
             // Extract the text between square brackets
             string variableText = match.Groups[1].Value;
-            convertedCode = convertedCode.Replace("Mock<" + variableText + ">", variableText);
+            code = code.Replace("Mock<" + variableText + ">", variableText);
         }
 
-        //Process Setup
-        convertedCode = convertedCode.Replace("It.IsAny", "Arg.Any");
+        return code;
+    }
+
+    private static string ProcessSetup(string code)
+    {
+        code = code.Replace("It.IsAny", "Arg.Any");
         string setupPattern = @"\.Setup\((.*?)\=\>";
 
-        Match setupMatch = Regex.Match(convertedCode, setupPattern);
+        Match setupMatch = Regex.Match(code, setupPattern);
 
         if (setupMatch.Success)
         {
             string extractedText = setupMatch.Groups[1].Value.Trim();
-            convertedCode = convertedCode.Replace(".Setup(" + extractedText + " => " + extractedText, "");
+            code = code.Replace(".Setup(" + extractedText + " => " + extractedText, "");
             //Find and remove the last closed bracket
             int open = 0;
             StringBuilder processedString = new();
-            foreach (char c in convertedCode)
+            foreach (char c in code)
             {
                 if (c == '(')
                 {
@@ -64,16 +92,9 @@ public class Conversion
                     open++;
                 }
             }
-            convertedCode = processedString.ToString();
+            code = processedString.ToString();
         }
-
-        //Return the final conversion result, with the original (pipeline) yaml, processed (actions) yaml, and any comments
-        return new ConversionResponse
-        {
-            OriginalCode = code,
-            ConvertedCode = convertedCode,
-            Comments = stepComments
-        };
+        return code;
     }
 
 }
