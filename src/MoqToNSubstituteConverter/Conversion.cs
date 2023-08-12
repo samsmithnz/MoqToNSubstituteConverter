@@ -30,7 +30,7 @@ public class Conversion
             //Feed the line back into the final result
             processedCode.AppendLine(processedLine);
         }
-  
+
         //Return the final conversion result, with the original code, processed (actions) yaml, and any comments
         return new ConversionResponse
         {
@@ -103,15 +103,38 @@ public class Conversion
     private static string ProcessVerify(string code)
     {
         string verifyPattern = @"\.Verify\((.*?)\=\>";
-        //string setupPattern = @"\.Verify\((.*?), Times\.Once\(\)\)";
+        int timesExactlyValue = 0;
 
         Match setupMatch = Regex.Match(code, verifyPattern);
 
         if (setupMatch.Success)
         {
             string extractedText = setupMatch.Groups[1].Value.Trim();
-            code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received()");
+
+            //Replace the times exactly piece
             code = code.Replace(", Times.Once)", "");
+            if (code.Contains(", Times.Exactly("))
+            {
+                //Find the number of times exactly
+                string timesExactlyPattern = @"Times.Exactly\((.*?)\)";
+                Match timesExactlyMatch = Regex.Match(code, timesExactlyPattern);
+                if (timesExactlyMatch.Success)
+                {
+                    string extractedTimesExactlyText = timesExactlyMatch.Groups[1].Value.Trim();
+                    timesExactlyValue = int.Parse(extractedTimesExactlyText);
+                }
+                code = code.Replace(", Times.Exactly(" + timesExactlyValue + ")", "");
+            }
+
+            //Add the received section, with the times exactly if it's more than 1
+            if (timesExactlyValue > 0)
+            {
+                code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received(" + timesExactlyValue + ")");
+            }
+            else
+            {
+                code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received()");
+            }
             //Find and remove the last closed bracket
             int open = 0;
             StringBuilder processedString = new();
