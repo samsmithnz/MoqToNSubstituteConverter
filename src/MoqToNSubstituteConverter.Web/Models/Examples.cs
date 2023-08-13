@@ -75,5 +75,13 @@ mock.Verify(_ => _.Transform(It.IsAny<string>()), Times.Exactly(3));";
 
             return code;
         }
+
+        public static string SimpleExample5()
+        {
+            string code = @"
+mock.Invocations.Clear();";
+
+            return code;
+        }
     }
 }
