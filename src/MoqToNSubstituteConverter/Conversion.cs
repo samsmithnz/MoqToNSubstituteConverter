@@ -18,6 +18,9 @@ public class Conversion
             //Remove .Object
             processedLine = processedLine.Replace(".Object", "");
 
+            //
+            processedLine = processedLine.Replace(".Invocations.Clear()", ".ClearReceivedCalls()");
+
             //process variable declarations
             processedLine = ProcessVariableDeclaration(processedLine);
 

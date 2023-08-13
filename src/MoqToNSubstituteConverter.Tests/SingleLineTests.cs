@@ -116,6 +116,25 @@ mock.Received(3).Transform(Arg.Any<string>());
 
             Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
         }
+
+        [TestMethod]
+        public void InvocationsClearTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string code = @"
+mock.Invocations.Clear();";
+
+            //Act
+            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"
+mock.ClearReceivedCalls();
+";
+
+            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+        }
        
     }
 }
