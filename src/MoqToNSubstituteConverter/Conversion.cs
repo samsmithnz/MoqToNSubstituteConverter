@@ -201,7 +201,9 @@ public class Conversion
 
         if (callbackMatch.Success)
         {
+            string extractedText = callbackMatch.Groups[1].Value.Trim();
 
+            code = code.Replace(".Callback(" + extractedText + ")","");
         }
 
 
