@@ -13,20 +13,21 @@ public class Conversion
     {
         List<string> stepComments = new();
         StringBuilder processedCode = new();
-        SyntaxTree tree = CSharpSyntaxTree.ParseText(code);
-        CompilationUnitSyntax root = tree.GetCompilationUnitRoot();
-        List<SyntaxNode> list = root.ChildNodes().ToList();
 
         //Run the first pass, using the Roslyn Syntax checker
+        SyntaxTree tree = CSharpSyntaxTree.ParseText(code);
+        CompilationUnitSyntax root = tree.GetCompilationUnitRoot();
+        List<SyntaxNode> syntaxList = root.ChildNodes().ToList();
         StringBuilder sb = new();
-        foreach (SyntaxNode item in list)
+        foreach (SyntaxNode item in syntaxList)
         {
             //Debug.WriteLine(item.Kind());
             //Debug.WriteLine(item.ToFullString());
             sb.Append(ProcessLine(item.ToFullString()));
         }
-        string processedCodeFirstPass = sb.ToString();
 
+        //Run a second pass, just scanning the individual lines.
+        string processedCodeFirstPass = sb.ToString();
         foreach (string line in processedCodeFirstPass.Split(Environment.NewLine))
         {
             //Feed the line back into the final result
