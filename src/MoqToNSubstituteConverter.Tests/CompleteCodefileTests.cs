@@ -92,4 +92,57 @@ namespace MyProject.Tests
         Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
 
     }
+    [TestMethod]
+    public void CompleteUnitTest2FileTest()
+    {
+        //Arrange
+        Conversion conversion = new Conversion();
+        string code = @"
+using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace MyProject.Tests
+{
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [TestClass]
+    public class MyUnitTests
+    {
+
+        [TestMethod]
+        public async Task CheckMyUnitTest()
+        {
+            //Arrange
+            int value = 14;
+        }
+    }
+}";
+
+        //Act
+        ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+
+        //Assert
+        string expected = @"
+using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace MyProject.Tests
+{
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [TestClass]
+    public class MyUnitTests
+    {
+
+        [TestMethod]
+        public async Task CheckMyUnitTest()
+        {
+            //Arrange
+            int value = 14;
+        }
+    }
+}
+";
+
+        Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+
+    }
 }
