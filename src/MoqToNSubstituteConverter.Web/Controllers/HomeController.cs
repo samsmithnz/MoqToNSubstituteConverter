@@ -19,7 +19,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         [HttpHead]
         public IActionResult Index()
         {
-            return View(viewName: "Index", model: new());
+            return View(viewName: "Index", model: new ConversionResponse());
         }
 
         [HttpPost]
