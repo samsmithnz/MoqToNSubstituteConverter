@@ -4,7 +4,7 @@ namespace MoqToNSubstituteConverter.Tests;
 public class CompleteCodefileTests
 {
     [TestMethod]
-    public void CompleteUnitTestFileTest()
+    public void CompleteTestWithExpicitDeclarationTest()
     {
         //Arrange
         Conversion conversion = new Conversion();
@@ -88,10 +88,10 @@ namespace MyProject.Tests
 ";
         Assert.AreEqual(code, result.OriginalCode);
         Assert.AreEqual(expected, result.ConvertedCode);
-
     }
+
     [TestMethod]
-    public void CompleteUnitTest2FileTest()
+    public void CompleteTestWithVarTest()
     {
         //Arrange
         Conversion conversion = new Conversion();
@@ -117,7 +117,8 @@ namespace MyProject.Tests
             var context = new MyStorageTable(mockConfiguration.Object);
             var mock = new Mock<IMyStorageTable>();
             mock.Setup(repo => repo.
-                CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));
+                CheckResult(It.IsAny<string>(), It.IsAny<string>())).
+                Returns(Task.FromResult(true));
             var controller = new MyController(mock.Object);
             var name = ""abc"";
             var environment = ""def"";
@@ -157,7 +158,8 @@ namespace MyProject.Tests
             var context = new MyStorageTable(mockConfiguration);
             var mock = Substitute.For<IMyStorageTable>();
             mock.
-                CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(true));
+                CheckResult(Arg.Any<string>(), Arg.Any<string>()).
+                Returns(Task.FromResult(true));
             var controller = new MyController(mock);
             var name = ""abc"";
             var environment = ""def"";
@@ -173,6 +175,5 @@ namespace MyProject.Tests
 ";
         Assert.AreEqual(code, result.OriginalCode);
         Assert.AreEqual(expected, result.ConvertedCode);
-
     }
 }
