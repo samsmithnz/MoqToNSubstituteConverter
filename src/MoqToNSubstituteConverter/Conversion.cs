@@ -62,6 +62,9 @@ public class Conversion
         //process verify
         processedLine = ProcessVerify(processedLine);
 
+        //process callback
+        processedLine = ProcessCallback(processedLine);
+
         //Feed the line back into the final result
         //processedCode.AppendLine(processedLine);
         return processedLine;
@@ -188,6 +191,11 @@ public class Conversion
             }
             code = processedString.ToString();
         }
+        return code;
+    }
+
+    private static string ProcessCallback(string code)
+    {
         return code;
     }
 
