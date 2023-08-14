@@ -27,11 +27,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Index(string txtMoqCode)
         {
             Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(txtMoqCode);
-            if (result.ConvertedCode.StartsWith(Environment.NewLine) == false)
-            {
-                result.ConvertedCode = Environment.NewLine + result.ConvertedCode;
-            }
+            string result = ProcessResult(txtMoqCode);
             return View(model: result);
         }
 
@@ -40,8 +36,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Example1()
         {
             string code = Examples.Example1();
-            Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            string result = ProcessResult(code);
             return View(viewName: "Index", model: result);
         }
 
@@ -50,8 +45,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Example2()
         {
             string code = Examples.Example2();
-            Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            string result = ProcessResult(code);
             return View(viewName: "Index", model: result);
         }
 
@@ -60,8 +54,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample1()
         {
             string code = Examples.SimpleExample1();
-            Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            string result = ProcessResult(code);
             return View(viewName: "Index", model: result);
         }
 
@@ -70,8 +63,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample2()
         {
             string code = Examples.SimpleExample2();
-            Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            string result = ProcessResult(code);
             return View(viewName: "Index", model: result);
         }
 
@@ -80,8 +72,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample3()
         {
             string code = Examples.SimpleExample3();
-            Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            string result = ProcessResult(code);
             return View(viewName: "Index", model: result);
         }
 
@@ -90,8 +81,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample4()
         {
             string code = Examples.SimpleExample4();
-            Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            string result = ProcessResult(code);
             return View(viewName: "Index", model: result);
         }
 
@@ -100,8 +90,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample5()
         {
             string code = Examples.SimpleExample5();
-            Conversion conversion = new();
-            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            string result = ProcessResult(code);
             return View(viewName: "Index", model: result);
         }
 
@@ -114,6 +103,14 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private static ConversionResponse ProcessResult(string code)
+        {
+            Conversion conversion = new();
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            result.ConvertedCode = Environment.NewLine + result.ConvertedCode;
+            return result;
         }
     }
 }
