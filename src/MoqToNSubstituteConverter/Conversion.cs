@@ -135,11 +135,11 @@ public class Conversion
         string verifyPattern = @"\.Verify\((.*?)\=\>";
         int timesExactlyValue = 0;
 
-        Match setupMatch = Regex.Match(code, verifyPattern);
+        Match verifyMatch = Regex.Match(code, verifyPattern);
 
-        if (setupMatch.Success)
+        if (verifyMatch.Success)
         {
-            string extractedText = setupMatch.Groups[1].Value.Trim();
+            string extractedText = verifyMatch.Groups[1].Value.Trim();
 
             //Replace the times exactly piece
             code = code.Replace(", Times.Once)", "");
@@ -196,6 +196,15 @@ public class Conversion
 
     private static string ProcessCallback(string code)
     {
+        string callbackPattern = @"\.Callback\((.*?)";
+        Match callbackMatch = Regex.Match(code, callbackPattern);
+
+        if (callbackMatch.Success)
+        {
+
+        }
+
+
         return code;
     }
 
