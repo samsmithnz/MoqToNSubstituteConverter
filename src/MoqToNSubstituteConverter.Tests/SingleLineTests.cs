@@ -18,7 +18,6 @@ using Moq;";
             string expected = @"
 using NSubstitute;
 ";
-
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
@@ -55,7 +54,6 @@ MyStorageTable context = new MyStorageTable(mockConfiguration.Object);";
             string expected = @"
 MyStorageTable context = new MyStorageTable(mockConfiguration);
 ";
-
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
@@ -74,7 +72,6 @@ mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Ret
             string expected = @"
 mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(true));
 ";
-
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
@@ -93,7 +90,6 @@ mock.Verify(x => x.Method(), Times.Once);";
             string expected = @"
 mock.Received().Method();
 ";
-
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
@@ -112,7 +108,6 @@ mock.Verify(_ => _.Transform(It.IsAny<string>()), Times.Exactly(3));";
             string expected = @"
 mock.Received(3).Transform(Arg.Any<string>());
 ";
-
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
@@ -131,7 +126,6 @@ mock.Invocations.Clear();";
             string expected = @"
 mock.ClearReceivedCalls();
 ";
-
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
@@ -159,7 +153,6 @@ mock
         Arg.Any<string>())
     .Returns(Task.FromResult(true));
 ";
-
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
