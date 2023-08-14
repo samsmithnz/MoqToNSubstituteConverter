@@ -28,6 +28,10 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         {
             Conversion conversion = new();
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(txtMoqCode);
+            if (result.ConvertedCode.StartsWith(Environment.NewLine) == false)
+            {
+                result.ConvertedCode = Environment.NewLine + result.ConvertedCode;
+            }
             return View(model: result);
         }
 

@@ -80,7 +80,7 @@ public class Conversion
             //    sb.AppendLine(item.ToString());
             //}
         }
-       string  processedCodeFirstPass = sb.ToString();
+        string processedCodeFirstPass = sb.ToString();
 
         foreach (string line in processedCodeFirstPass.Split(Environment.NewLine))
         {
@@ -105,9 +105,6 @@ public class Conversion
             //Feed the line back into the final result
             processedCode.AppendLine(processedLine);
         }
-
-        //TODO: fix this hack
-        //processedCode.Append(sb.ToString());
 
         //Return the final conversion result, with the original code, processed (actions) yaml, and any comments
         return new ConversionResponse
