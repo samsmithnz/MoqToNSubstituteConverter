@@ -34,7 +34,6 @@ Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();";
 
             //Assert
             string expected = @"
-
 IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
 ";
             Assert.AreEqual(expected, result.ConvertedCode);
