@@ -1,9 +1,8 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Diagnostics;
 
 namespace MoqToNSubstituteConverter;
 
