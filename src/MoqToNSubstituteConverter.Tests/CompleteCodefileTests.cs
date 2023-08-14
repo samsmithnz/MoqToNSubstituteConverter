@@ -100,8 +100,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyProject.Tests
@@ -140,6 +138,9 @@ namespace MyProject.Tests
         string expected = @"
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
+using System;
+using System.Threading.Tasks;
 
 namespace MyProject.Tests
 {
@@ -152,7 +153,20 @@ namespace MyProject.Tests
         public async Task CheckMyUnitTest()
         {
             //Arrange
-            int value = 14;
+            var mockConfiguration = Substitute.For<IConfiguration>();
+            var context = new MyStorageTable(mockConfiguration);
+            var mock = Substitute.For<IMyStorageTable>();
+            mock.
+                CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(true));
+            var controller = new MyController(mock);
+            var name = ""abc"";
+            var environment = ""def"";
+
+            //Act
+            var result = await controller.CheckResult(name, environment);
+
+            //Assert
+            Assert.IsTrue(result);
         }
     }
 }
