@@ -19,66 +19,9 @@ public class Conversion
         StringBuilder sb = new();
         foreach (SyntaxNode item in list)
         {
-            Debug.WriteLine(item.Kind());
-            Debug.WriteLine(item.ToFullString());
+            //Debug.WriteLine(item.Kind());
+            //Debug.WriteLine(item.ToFullString());
             sb.Append(ProcessLine(item.ToFullString()));
-
-            //if (item.Kind().ToString() == "GlobalStatement")
-            //{
-            //    sb.Append(ProcessLine(item.ToString()));
-            //}
-            //else if (item.Kind().ToString() == "NamespaceDeclaration")
-            //{
-            //    List<SyntaxNode> namespaceNodes = item.ChildNodes().ToList();
-            //    foreach (SyntaxNode namespaceItem in namespaceNodes)
-            //    {
-            //        if (namespaceItem.Kind().ToString() == "ClassDeclaration")
-            //        {
-            //            List<SyntaxNode> classNodes = namespaceItem.ChildNodes().ToList();
-            //            foreach (SyntaxNode classNode in classNodes)
-            //            {
-            //                if (classNode.Kind().ToString() == "MethodDeclaration")
-            //                {
-            //                    List<SyntaxNode> methodNodes = classNode.ChildNodes().ToList();
-            //                    foreach (SyntaxNode methodNode in classNodes)
-            //                    {
-            //                        if (methodNode.Kind().ToString() == "Block")
-            //                        {
-            //                            List<SyntaxNode> blockNodes = methodNode.ChildNodes().ToList();
-            //                            foreach (SyntaxNode blockNode in classNodes)
-            //                            {
-            //                                if (blockNode.Kind().ToString() == "LocalDeclarationStatement")
-            //                                {
-            //                                    sb.Append(ProcessLine(blockNode.ToString()));
-            //                                }
-            //                                else
-            //                                {
-            //                                    sb.AppendLine(item.ToString());
-            //                                }
-            //                            }
-            //                        }
-            //                        else
-            //                        {
-            //                            sb.AppendLine(item.ToString());
-            //                        }
-            //                    } //foreach (SyntaxNode methodNode in classNodes)
-            //                }
-            //                else
-            //                {
-            //                    sb.AppendLine(item.ToString());
-            //                }
-            //            } //foreach (SyntaxNode classNode in classNodes)
-            //        }
-            //        else
-            //        {
-            //            sb.AppendLine(item.ToString());
-            //        }
-            //    }//foreach (SyntaxNode namespaceItem in namespaceNodes)
-            //}
-            //else
-            //{
-            //    sb.AppendLine(item.ToString());
-            //}
         }
         string processedCodeFirstPass = sb.ToString();
 
@@ -90,7 +33,7 @@ public class Conversion
             //Remove .Object
             processedLine = processedLine.Replace(".Object", "");
 
-            //
+            //process Invocations.Clear statement
             processedLine = processedLine.Replace(".Invocations.Clear()", ".ClearReceivedCalls()");
 
             //process variable declarations
