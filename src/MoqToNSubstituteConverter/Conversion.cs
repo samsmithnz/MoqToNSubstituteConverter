@@ -80,9 +80,9 @@ public class Conversion
             //    sb.AppendLine(item.ToString());
             //}
         }
-        code = sb.ToString();
+       string  processedCodeFirstPass = sb.ToString();
 
-        foreach (string line in code.Split(Environment.NewLine))
+        foreach (string line in processedCodeFirstPass.Split(Environment.NewLine))
         {
             //Replace using
             string processedLine = line.Replace("using Moq;", "using NSubstitute;");
