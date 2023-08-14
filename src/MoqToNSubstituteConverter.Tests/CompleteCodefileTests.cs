@@ -86,7 +86,6 @@ namespace MyProject.Tests
     }
 }
 ";
-        //Assert
         Assert.AreEqual(code, result.OriginalCode);
         Assert.AreEqual(expected, result.ConvertedCode);
 
@@ -172,8 +171,6 @@ namespace MyProject.Tests
     }
 }
 ";
-
-        //Assert
         Assert.AreEqual(code, result.OriginalCode);
         Assert.AreEqual(expected, result.ConvertedCode);
 
