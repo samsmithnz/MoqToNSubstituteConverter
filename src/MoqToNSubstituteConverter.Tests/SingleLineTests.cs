@@ -15,7 +15,6 @@
 
             //Assert
             string expected = @"using NSubstitute;
-
 ";
 
             Assert.AreEqual(expected, result.ConvertedCode);
