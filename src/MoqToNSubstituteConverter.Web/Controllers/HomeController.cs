@@ -43,6 +43,16 @@ namespace MoqToNSubstituteConverter.Web.Controllers
 
         [HttpGet]
         [HttpPost]
+        public IActionResult Example2()
+        {
+            string code = Examples.Example2();
+            Conversion conversion = new();
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+            return View(viewName: "Index", model: result);
+        }
+
+        [HttpGet]
+        [HttpPost]
         public IActionResult SimpleExample1()
         {
             string code = Examples.SimpleExample1();
