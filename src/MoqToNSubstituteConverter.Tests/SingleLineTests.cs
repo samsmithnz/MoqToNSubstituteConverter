@@ -12,14 +12,13 @@
 using Moq;";
 
             //Act
-            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
             string expected = @"
 using NSubstitute;
 ";
-
-            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+            Assert.AreEqual(expected, result.ConvertedCode);
         }
 
         [TestMethod]
@@ -31,14 +30,13 @@ using NSubstitute;
 Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();";
 
             //Act
-            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
             string expected = @"
 IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
 ";
-
-            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+            Assert.AreEqual(expected, result.ConvertedCode);
         }
 
         [TestMethod]
@@ -50,14 +48,13 @@ IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
 MyStorageTable context = new MyStorageTable(mockConfiguration.Object);";
 
             //Act
-            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
             string expected = @"
 MyStorageTable context = new MyStorageTable(mockConfiguration);
 ";
-
-            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+            Assert.AreEqual(expected, result.ConvertedCode);
         }
 
         [TestMethod]
@@ -69,14 +66,13 @@ MyStorageTable context = new MyStorageTable(mockConfiguration);
 mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));";
 
             //Act
-            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
             string expected = @"
 mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(true));
 ";
-
-            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+            Assert.AreEqual(expected, result.ConvertedCode);
         }
 
         [TestMethod]
@@ -88,14 +84,13 @@ mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(t
 mock.Verify(x => x.Method(), Times.Once);";
 
             //Act
-            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
             string expected = @"
 mock.Received().Method();
 ";
-
-            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+            Assert.AreEqual(expected, result.ConvertedCode);
         }
 
         [TestMethod]
@@ -107,14 +102,13 @@ mock.Received().Method();
 mock.Verify(_ => _.Transform(It.IsAny<string>()), Times.Exactly(3));";
 
             //Act
-            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
             string expected = @"
 mock.Received(3).Transform(Arg.Any<string>());
 ";
-
-            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+            Assert.AreEqual(expected, result.ConvertedCode);
         }
 
         [TestMethod]
@@ -126,15 +120,41 @@ mock.Received(3).Transform(Arg.Any<string>());
 mock.Invocations.Clear();";
 
             //Act
-            ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
             string expected = @"
 mock.ClearReceivedCalls();
 ";
-
-            Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+            Assert.AreEqual(expected, result.ConvertedCode);
         }
-       
+
+        [TestMethod]
+        public void SingleLineOnMultipleLinesTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string code = @"
+mock
+    .Setup(repo => repo.CheckResult(
+        It.IsAny<string>(), 
+        It.IsAny<string>()))
+    .Returns(Task.FromResult(true));";
+
+            //Act
+            ConversionResponse result = conversion.
+                ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"
+mock
+    .CheckResult(
+        Arg.Any<string>(), 
+        Arg.Any<string>())
+    .Returns(Task.FromResult(true));
+";
+            Assert.AreEqual(expected, result.ConvertedCode);
+        }
+
     }
 }

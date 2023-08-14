@@ -24,7 +24,7 @@
                         <button class="action" data-bi-name="copy" onclick="selectElementContentsById('txtNSubstituteCode')"><svg class="vector-icon" focusable="false" viewBox="0 0 14 14"><path d="M13 6.8V14H4v-3H0V0h5.2l3 3h1L13 6.8zM4 3h2.8l-2-2H1v9h3V3zm8 5H8V4H5v9h7V8zM9 7h2.8L9 4.2V7z"></path></svg> Copy</button>
                     </div>
                     <pre id="txtNSubstituteCode" style="height: 90%; text-align: left;">
-@Model.ConvertedCode
+                        @Model.ConvertedCode
                     </pre>
                 </div>
             </div>
@@ -37,19 +37,12 @@
             <div class="row">
                 <div class="col-sm-12" style="margin-bottom: 8px">
                     <p><b>Try some samples:</b></p>
-                    <button asp-controller="home" asp-action="Example1">Full example</button>&nbsp;
-                    @* <button asp-controller="home" asp-action="CDExample">ASP.NET Core CD</button>&nbsp;
-                    <button asp-controller="home" asp-action="CICDExample">ASP.NET Core CI/CD</button>&nbsp;
-                    <button asp-controller="home" asp-action="DotNetFrameworkDesktopExample">.NET Framework</button>&nbsp;
-                    <button asp-controller="home" asp-action="DockerExample">Docker</button>&nbsp;*@
+                    <button asp-controller="home" asp-action="Example1">Full example with explicit declaration</button>&nbsp;
+                    <button asp-controller="home" asp-action="Example2">Full example with var declaration</button>&nbsp;
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12" style="margin-bottom: 8px">
-                    @*<button asp-controller="home" asp-action="ASPDotNetCoreSimpleExample">ASP.NET Core</button>&nbsp;
-                    <button asp-controller="home" asp-action="ASPDotNetFrameworkExample">ASP.NET Framework</button>&nbsp;*@
-
-                </div>
+                <div class="col-sm-12" style="margin-bottom: 8px"></div>
             </div>
             <div class="row">
                 <div class="col-sm-12" style="margin-bottom: 8px">

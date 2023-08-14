@@ -28,11 +28,53 @@ namespace MyProject.Tests
             Mock<IMyStorageTable> mock = new Mock<IMyStorageTable>();
             mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));
             MyController controller = new MyController(mock.Object);
-            string name = """"abc"""";
-            string environment = """"def"""";
+            string name = ""abc"";
+            string environment = ""def"";
 
             //Act
             bool result = await controller.CheckResult(name, environment);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+    }
+}";
+            return code;
+        }
+
+        //This example uses var instead of explicit types and has multi-line statements
+        public static string Example2()
+        {
+            string code = @"using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MyProject.Tests
+{
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [TestClass]
+    public class MyUnitTests
+    {
+
+        [TestMethod]
+        public async Task CheckMyUnitTest()
+        {
+            //Arrange
+            var mockConfiguration = new Mock<IConfiguration>();
+            var context = new MyStorageTable(mockConfiguration.Object);
+            var mock = new Mock<IMyStorageTable>();
+            mock.Setup(repo => repo.
+                CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));
+            var controller = new MyController(mock.Object);
+            var name = ""abc"";
+            var environment = ""def"";
+
+            //Act
+            var result = await controller.CheckResult(name, environment);
 
             //Assert
             Assert.IsTrue(result);
