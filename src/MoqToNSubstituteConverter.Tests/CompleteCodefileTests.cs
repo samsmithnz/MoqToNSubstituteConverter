@@ -46,7 +46,7 @@ namespace MyProject.Tests
 }";
 
         //Act
-        ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+        ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
         //Assert
         string expected = @"
@@ -87,7 +87,7 @@ namespace MyProject.Tests
 }
 ";
 
-        Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+        Assert.AreEqual(expected, result.ConvertedCode);
 
     }
     [TestMethod]
@@ -132,7 +132,7 @@ namespace MyProject.Tests
 }";
 
         //Act
-        ConversionResponse gitHubOutput = conversion.ConvertMoqToNSubstitute(code);
+        ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
         //Assert
         string expected = @"
@@ -172,7 +172,7 @@ namespace MyProject.Tests
 }
 ";
 
-        Assert.AreEqual(expected, gitHubOutput.ConvertedCode);
+        Assert.AreEqual(expected, result.ConvertedCode);
 
     }
 }
