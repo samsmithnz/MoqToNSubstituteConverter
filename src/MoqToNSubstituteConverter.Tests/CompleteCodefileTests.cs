@@ -119,8 +119,8 @@ namespace MyProject.Tests
             mock.Setup(repo => repo.
                 CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));
             var controller = new MyController(mock.Object);
-            var name = """"abc"""";
-            var environment = """"def"""";
+            var name = ""abc"";
+            var environment = ""def"";
 
             //Act
             var result = await controller.CheckResult(name, environment);
