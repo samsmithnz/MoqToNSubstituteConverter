@@ -50,7 +50,7 @@ public class Conversion
         //Remove .Object
         processedLine = processedLine.Replace(".Object", "");
 
-        //
+        //process Invocations.Clear
         processedLine = processedLine.Replace(".Invocations.Clear()", ".ClearReceivedCalls()");
 
         //process variable declarations
