@@ -98,6 +98,11 @@ namespace MyProject.Tests
         string code = @"
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyProject.Tests
 {
@@ -110,7 +115,20 @@ namespace MyProject.Tests
         public async Task CheckMyUnitTest()
         {
             //Arrange
-            int value = 14;
+            var mockConfiguration = new Mock<IConfiguration>();
+            var context = new MyStorageTable(mockConfiguration.Object);
+            var mock = new Mock<IMyStorageTable>();
+            mock.Setup(repo => repo.
+                CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));
+            var controller = new MyController(mock.Object);
+            var name = """"abc"""";
+            var environment = """"def"""";
+
+            //Act
+            var result = await controller.CheckResult(name, environment);
+
+            //Assert
+            Assert.IsTrue(result);
         }
     }
 }";

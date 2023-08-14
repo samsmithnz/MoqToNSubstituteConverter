@@ -8,13 +8,15 @@
         {
             //Arrange
             Conversion conversion = new();
-            string code = @"using Moq;";
+            string code = @"
+using Moq;";
 
             //Act
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"using NSubstitute;
+            string expected = @"
+using NSubstitute;
 ";
 
             Assert.AreEqual(expected, result.ConvertedCode);
@@ -25,13 +27,15 @@
         {
             //Arrange
             Conversion conversion = new();
-            string code = @"Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();";
+            string code = @"
+Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();";
 
             //Act
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
+            string expected = @"
+IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
 ";
 
             Assert.AreEqual(expected, result.ConvertedCode);
@@ -42,13 +46,15 @@
         {
             //Arrange
             Conversion conversion = new();
-            string code = @"MyStorageTable context = new MyStorageTable(mockConfiguration.Object);";
+            string code = @"
+MyStorageTable context = new MyStorageTable(mockConfiguration.Object);";
 
             //Act
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"MyStorageTable context = new MyStorageTable(mockConfiguration);
+            string expected = @"
+MyStorageTable context = new MyStorageTable(mockConfiguration);
 ";
 
             Assert.AreEqual(expected, result.ConvertedCode);
@@ -59,13 +65,15 @@
         {
             //Arrange
             Conversion conversion = new();
-            string code = @"mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));";
+            string code = @"
+mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(true));";
 
             //Act
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(true));
+            string expected = @"
+mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(true));
 ";
 
             Assert.AreEqual(expected, result.ConvertedCode);
@@ -76,13 +84,15 @@
         {
             //Arrange
             Conversion conversion = new();
-            string code = @"mock.Verify(x => x.Method(), Times.Once);";
+            string code = @"
+mock.Verify(x => x.Method(), Times.Once);";
 
             //Act
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"mock.Received().Method();
+            string expected = @"
+mock.Received().Method();
 ";
 
             Assert.AreEqual(expected, result.ConvertedCode);
@@ -93,13 +103,15 @@
         {
             //Arrange
             Conversion conversion = new();
-            string code = @"mock.Verify(_ => _.Transform(It.IsAny<string>()), Times.Exactly(3));";
+            string code = @"
+mock.Verify(_ => _.Transform(It.IsAny<string>()), Times.Exactly(3));";
 
             //Act
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"mock.Received(3).Transform(Arg.Any<string>());
+            string expected = @"
+mock.Received(3).Transform(Arg.Any<string>());
 ";
 
             Assert.AreEqual(expected, result.ConvertedCode);
@@ -110,13 +122,15 @@
         {
             //Arrange
             Conversion conversion = new();
-            string code = @"mock.Invocations.Clear();";
+            string code = @"
+mock.Invocations.Clear();";
 
             //Act
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"mock.ClearReceivedCalls();
+            string expected = @"
+mock.ClearReceivedCalls();
 ";
 
             Assert.AreEqual(expected, result.ConvertedCode);
@@ -127,7 +141,8 @@
         {
             //Arrange
             Conversion conversion = new();
-            string code = @"mock
+            string code = @"
+mock
     .Setup(repo => repo.CheckResult(
         It.IsAny<string>(), 
         It.IsAny<string>()))
@@ -138,7 +153,8 @@
                 ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"mock
+            string expected = @"
+mock
     .CheckResult(
         Arg.Any<string>(), 
         Arg.Any<string>())
