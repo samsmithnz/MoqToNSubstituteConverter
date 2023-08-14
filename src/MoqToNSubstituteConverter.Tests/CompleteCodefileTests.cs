@@ -9,8 +9,6 @@ public class CompleteCodefileTests
         //Arrange
         Conversion conversion = new Conversion();
         string code = @"
-
-
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
