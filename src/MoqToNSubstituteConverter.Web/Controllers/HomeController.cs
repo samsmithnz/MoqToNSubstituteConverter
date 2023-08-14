@@ -19,16 +19,13 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         [HttpHead]
         public IActionResult Index()
         {
-            ConversionResponse result = new();
-            return View(viewName: "Index", model: result);
+            return View(viewName: "Index", model: new());
         }
 
         [HttpPost]
         public IActionResult Index(string txtMoqCode)
         {
-            Conversion conversion = new();
-            string result = ProcessResult(txtMoqCode);
-            return View(model: result);
+            return View(model: ProcessResult(txtMoqCode));
         }
 
         [HttpGet]
@@ -36,8 +33,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Example1()
         {
             string code = Examples.Example1();
-            string result = ProcessResult(code);
-            return View(viewName: "Index", model: result);
+            return View(viewName: "Index", model: ProcessResult(code));
         }
 
         [HttpGet]
@@ -45,8 +41,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult Example2()
         {
             string code = Examples.Example2();
-            string result = ProcessResult(code);
-            return View(viewName: "Index", model: result);
+            return View(viewName: "Index", model: ProcessResult(code));
         }
 
         [HttpGet]
@@ -54,8 +49,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample1()
         {
             string code = Examples.SimpleExample1();
-            string result = ProcessResult(code);
-            return View(viewName: "Index", model: result);
+            return View(viewName: "Index", model: ProcessResult(code));
         }
 
         [HttpGet]
@@ -63,8 +57,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample2()
         {
             string code = Examples.SimpleExample2();
-            string result = ProcessResult(code);
-            return View(viewName: "Index", model: result);
+            return View(viewName: "Index", model: ProcessResult(code));
         }
 
         [HttpGet]
@@ -72,8 +65,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample3()
         {
             string code = Examples.SimpleExample3();
-            string result = ProcessResult(code);
-            return View(viewName: "Index", model: result);
+            return View(viewName: "Index", model: ProcessResult(code));
         }
 
         [HttpGet]
@@ -81,8 +73,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample4()
         {
             string code = Examples.SimpleExample4();
-            string result = ProcessResult(code);
-            return View(viewName: "Index", model: result);
+            return View(viewName: "Index", model: ProcessResult(code));
         }
 
         [HttpGet]
@@ -90,8 +81,7 @@ namespace MoqToNSubstituteConverter.Web.Controllers
         public IActionResult SimpleExample5()
         {
             string code = Examples.SimpleExample5();
-            string result = ProcessResult(code);
-            return View(viewName: "Index", model: result);
+            return View(viewName: "Index", model: ProcessResult(code));
         }
 
         public IActionResult Privacy()
