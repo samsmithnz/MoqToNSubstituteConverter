@@ -16,6 +16,8 @@ public class Conversion
         SyntaxTree tree = CSharpSyntaxTree.ParseText(code);
         CompilationUnitSyntax root = tree.GetCompilationUnitRoot();
         List<SyntaxNode> list = root.ChildNodes().ToList();
+
+        //Run the first pass, using the Roslyn Syntax checker
         StringBuilder sb = new();
         foreach (SyntaxNode item in list)
         {
@@ -27,26 +29,8 @@ public class Conversion
 
         foreach (string line in processedCodeFirstPass.Split(Environment.NewLine))
         {
-            //Replace using
-            string processedLine = line.Replace("using Moq;", "using NSubstitute;");
-
-            //Remove .Object
-            processedLine = processedLine.Replace(".Object", "");
-
-            //process Invocations.Clear statement
-            processedLine = processedLine.Replace(".Invocations.Clear()", ".ClearReceivedCalls()");
-
-            //process variable declarations
-            processedLine = ProcessVariableDeclaration(processedLine);
-
-            //process setup
-            processedLine = ProcessSetup(processedLine);
-
-            //process verify
-            processedLine = ProcessVerify(processedLine);
-
             //Feed the line back into the final result
-            processedCode.AppendLine(processedLine);
+            processedCode.AppendLine(ProcessLine(line));
         }
 
         //Return the final conversion result, with the original code, processed (actions) yaml, and any comments
