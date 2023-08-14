@@ -1,7 +1,7 @@
 namespace MoqToNSubstituteConverter.Tests;
 
 [TestClass]
-public class CompleteCodefileTests
+public class CompleteCodeTests
 {
     [TestMethod]
     public void CompleteTestWithExpicitDeclarationTest()
