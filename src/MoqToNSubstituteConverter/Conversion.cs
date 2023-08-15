@@ -63,7 +63,7 @@ public class Conversion
         processedLine = ProcessVerify(processedLine);
 
         //process callback
-        processedLine = ProcessCallback(processedLine);
+        //TODO: processedLine = ProcessCallback(processedLine);
 
         //Feed the line back into the final result
         //processedCode.AppendLine(processedLine);
