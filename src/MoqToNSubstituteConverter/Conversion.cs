@@ -1,9 +1,8 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Diagnostics;
 
 namespace MoqToNSubstituteConverter;
 
@@ -13,97 +12,25 @@ public class Conversion
     {
         List<string> stepComments = new();
         StringBuilder processedCode = new();
+
+        //Run the first pass, using the Roslyn Syntax checker
         SyntaxTree tree = CSharpSyntaxTree.ParseText(code);
         CompilationUnitSyntax root = tree.GetCompilationUnitRoot();
-        List<SyntaxNode> list = root.ChildNodes().ToList();
+        List<SyntaxNode> syntaxList = root.ChildNodes().ToList();
         StringBuilder sb = new();
-        foreach (SyntaxNode item in list)
+        foreach (SyntaxNode item in syntaxList)
         {
-            Debug.WriteLine(item.Kind());
-            Debug.WriteLine(item.ToFullString());
+            //Debug.WriteLine(item.Kind());
+            //Debug.WriteLine(item.ToFullString());
             sb.Append(ProcessLine(item.ToFullString()));
-
-            //if (item.Kind().ToString() == "GlobalStatement")
-            //{
-            //    sb.Append(ProcessLine(item.ToString()));
-            //}
-            //else if (item.Kind().ToString() == "NamespaceDeclaration")
-            //{
-            //    List<SyntaxNode> namespaceNodes = item.ChildNodes().ToList();
-            //    foreach (SyntaxNode namespaceItem in namespaceNodes)
-            //    {
-            //        if (namespaceItem.Kind().ToString() == "ClassDeclaration")
-            //        {
-            //            List<SyntaxNode> classNodes = namespaceItem.ChildNodes().ToList();
-            //            foreach (SyntaxNode classNode in classNodes)
-            //            {
-            //                if (classNode.Kind().ToString() == "MethodDeclaration")
-            //                {
-            //                    List<SyntaxNode> methodNodes = classNode.ChildNodes().ToList();
-            //                    foreach (SyntaxNode methodNode in classNodes)
-            //                    {
-            //                        if (methodNode.Kind().ToString() == "Block")
-            //                        {
-            //                            List<SyntaxNode> blockNodes = methodNode.ChildNodes().ToList();
-            //                            foreach (SyntaxNode blockNode in classNodes)
-            //                            {
-            //                                if (blockNode.Kind().ToString() == "LocalDeclarationStatement")
-            //                                {
-            //                                    sb.Append(ProcessLine(blockNode.ToString()));
-            //                                }
-            //                                else
-            //                                {
-            //                                    sb.AppendLine(item.ToString());
-            //                                }
-            //                            }
-            //                        }
-            //                        else
-            //                        {
-            //                            sb.AppendLine(item.ToString());
-            //                        }
-            //                    } //foreach (SyntaxNode methodNode in classNodes)
-            //                }
-            //                else
-            //                {
-            //                    sb.AppendLine(item.ToString());
-            //                }
-            //            } //foreach (SyntaxNode classNode in classNodes)
-            //        }
-            //        else
-            //        {
-            //            sb.AppendLine(item.ToString());
-            //        }
-            //    }//foreach (SyntaxNode namespaceItem in namespaceNodes)
-            //}
-            //else
-            //{
-            //    sb.AppendLine(item.ToString());
-            //}
         }
-        string processedCodeFirstPass = sb.ToString();
 
+        //Run a second pass, just scanning the individual lines.
+        string processedCodeFirstPass = sb.ToString();
         foreach (string line in processedCodeFirstPass.Split(Environment.NewLine))
         {
-            //Replace using
-            string processedLine = line.Replace("using Moq;", "using NSubstitute;");
-
-            //Remove .Object
-            processedLine = processedLine.Replace(".Object", "");
-
-            //
-            processedLine = processedLine.Replace(".Invocations.Clear()", ".ClearReceivedCalls()");
-
-            //process variable declarations
-            processedLine = ProcessVariableDeclaration(processedLine);
-
-            //process setup
-            processedLine = ProcessSetup(processedLine);
-
-            //process verify
-            processedLine = ProcessVerify(processedLine);
-
             //Feed the line back into the final result
-            processedCode.AppendLine(processedLine);
+            processedCode.AppendLine(ProcessLine(line));
         }
 
         //Return the final conversion result, with the original code, processed (actions) yaml, and any comments
@@ -123,7 +50,7 @@ public class Conversion
         //Remove .Object
         processedLine = processedLine.Replace(".Object", "");
 
-        //
+        //process Invocations.Clear
         processedLine = processedLine.Replace(".Invocations.Clear()", ".ClearReceivedCalls()");
 
         //Fix ReturnsAsync
@@ -137,6 +64,9 @@ public class Conversion
 
         //process verify
         processedLine = ProcessVerify(processedLine);
+
+        //process callback
+        //TODO: processedLine = ProcessCallback(processedLine);
 
         //Feed the line back into the final result
         //processedCode.AppendLine(processedLine);
@@ -208,11 +138,11 @@ public class Conversion
         string verifyPattern = @"\.Verify\((.*?)\=\>";
         int timesExactlyValue = 0;
 
-        Match setupMatch = Regex.Match(code, verifyPattern);
+        Match verifyMatch = Regex.Match(code, verifyPattern);
 
-        if (setupMatch.Success)
+        if (verifyMatch.Success)
         {
-            string extractedText = setupMatch.Groups[1].Value.Trim();
+            string extractedText = verifyMatch.Groups[1].Value.Trim();
 
             //Replace the times exactly piece
             code = code.Replace(", Times.Once)", "");
@@ -264,6 +194,24 @@ public class Conversion
             }
             code = processedString.ToString();
         }
+        return code;
+    }
+
+    private static string ProcessCallback(string code)
+    {
+        //string callbackPattern = @"\.Callback\((.*?)";
+        string callbackPattern = @"\.Callback*\((?<=\().*(?=\))\)";
+        Match callbackMatch = Regex.Match(code, callbackPattern);
+
+        if (callbackMatch.Success)
+        {
+            string extractedText = callbackMatch.Groups[0].Value.Trim().Replace(".Callback(","");
+            extractedText = extractedText.Substring(0, extractedText.Length - 1);
+
+            code = code.Replace(".Callback(" + extractedText + ")","");
+        }
+
+
         return code;
     }
 
