@@ -196,12 +196,14 @@ public class Conversion
 
     private static string ProcessCallback(string code)
     {
-        string callbackPattern = @"\.Callback\((.*?)";
+        //string callbackPattern = @"\.Callback\((.*?)";
+        string callbackPattern = @"\.Callback*\((?<=\().*(?=\))\)";
         Match callbackMatch = Regex.Match(code, callbackPattern);
 
         if (callbackMatch.Success)
         {
-            string extractedText = callbackMatch.Groups[1].Value.Trim();
+            string extractedText = callbackMatch.Groups[0].Value.Trim().Replace(".Callback(","");
+            extractedText = extractedText.Substring(0, extractedText.Length - 1);
 
             code = code.Replace(".Callback(" + extractedText + ")","");
         }
