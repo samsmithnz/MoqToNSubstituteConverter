@@ -76,6 +76,24 @@ mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(t
         }
 
         [TestMethod]
+        public void SetupWithAsyncReturnTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string code = @"
+mock.Setup(repo => repo.CheckResult(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(Task.FromResult(true));";
+
+            //Act
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"
+mock.CheckResult(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(true));
+";
+            Assert.AreEqual(expected, result.ConvertedCode);
+        }
+
+        [TestMethod]
         public void VerifyTest()
         {
             //Arrange

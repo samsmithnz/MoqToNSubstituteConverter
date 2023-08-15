@@ -53,6 +53,9 @@ public class Conversion
         //process Invocations.Clear
         processedLine = processedLine.Replace(".Invocations.Clear()", ".ClearReceivedCalls()");
 
+        //Fix ReturnsAsync
+        processedLine = processedLine.Replace("ReturnsAsync", "Returns");
+        
         //process variable declarations
         processedLine = ProcessVariableDeclaration(processedLine);
 
