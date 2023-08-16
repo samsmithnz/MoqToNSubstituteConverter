@@ -202,5 +202,21 @@ mock
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
+
+        [TestMethod]
+        public void UsingNullInputTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string? code = null;
+
+            //Act
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"";
+            Assert.AreEqual(expected, result.ConvertedCode);
+        }
+
     }
 }

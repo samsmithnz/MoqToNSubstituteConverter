@@ -10,37 +10,50 @@ public class Conversion
 {
     public ConversionResponse ConvertMoqToNSubstitute(string code)
     {
-        List<string> stepComments = new();
-        StringBuilder processedCode = new();
-
-        //Run the first pass, using the Roslyn Syntax checker
-        SyntaxTree tree = CSharpSyntaxTree.ParseText(code);
-        CompilationUnitSyntax root = tree.GetCompilationUnitRoot();
-        List<SyntaxNode> syntaxList = root.ChildNodes().ToList();
-        StringBuilder sb = new();
-        foreach (SyntaxNode item in syntaxList)
+        if (!string.IsNullOrEmpty(code))
         {
-            //Debug.WriteLine(item.Kind());
-            //Debug.WriteLine(item.ToFullString());
-            sb.Append(ProcessLine(item.ToFullString()));
+            List<string> stepComments = new();
+            StringBuilder processedCode = new();
+
+            //Run the first pass, using the Roslyn Syntax checker
+            SyntaxTree tree = CSharpSyntaxTree.ParseText(code);
+            CompilationUnitSyntax root = tree.GetCompilationUnitRoot();
+            List<SyntaxNode> syntaxList = root.ChildNodes().ToList();
+            StringBuilder sb = new();
+            foreach (SyntaxNode item in syntaxList)
+            {
+                //Debug.WriteLine(item.Kind());
+                //Debug.WriteLine(item.ToFullString());
+                sb.Append(ProcessLine(item.ToFullString()));
+            }
+
+            //Run a second pass, just scanning the individual lines.
+            string processedCodeFirstPass = sb.ToString();
+            foreach (string line in processedCodeFirstPass.Split(Environment.NewLine))
+            {
+                //Feed the line back into the final result
+                processedCode.AppendLine(ProcessLine(line));
+            }
+
+            //Return the final conversion result, with the original code, processed (actions) yaml, and any comments
+            return new ConversionResponse
+            {
+                OriginalCode = code,
+                ConvertedCode = processedCode.ToString(),
+                Comments = stepComments
+            };
         }
-
-        //Run a second pass, just scanning the individual lines.
-        string processedCodeFirstPass = sb.ToString();
-        foreach (string line in processedCodeFirstPass.Split(Environment.NewLine))
+        else
         {
-            //Feed the line back into the final result
-            processedCode.AppendLine(ProcessLine(line));
+            return new ConversionResponse()
+            {
+                OriginalCode = "",
+                ConvertedCode = "",
+                Comments = new()
+            };
         }
-
-        //Return the final conversion result, with the original code, processed (actions) yaml, and any comments
-        return new ConversionResponse
-        {
-            OriginalCode = code,
-            ConvertedCode = processedCode.ToString(),
-            Comments = stepComments
-        };
     }
+
 
     private static string ProcessLine(string line)
     {
@@ -55,7 +68,7 @@ public class Conversion
 
         //Fix ReturnsAsync
         processedLine = processedLine.Replace("ReturnsAsync", "Returns");
-        
+
         //process variable declarations
         processedLine = ProcessVariableDeclaration(processedLine);
 
@@ -205,10 +218,10 @@ public class Conversion
 
         if (callbackMatch.Success)
         {
-            string extractedText = callbackMatch.Groups[0].Value.Trim().Replace(".Callback(","");
+            string extractedText = callbackMatch.Groups[0].Value.Trim().Replace(".Callback(", "");
             extractedText = extractedText.Substring(0, extractedText.Length - 1);
 
-            code = code.Replace(".Callback(" + extractedText + ")","");
+            code = code.Replace(".Callback(" + extractedText + ")", "");
         }
 
 
