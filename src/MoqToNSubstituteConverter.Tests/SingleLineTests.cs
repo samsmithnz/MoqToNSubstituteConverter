@@ -174,33 +174,49 @@ mock
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
-//        [TestMethod]
-//        public void CallbackTest()
-//        {
-//            //Arrange
-//            Conversion conversion = new();
-//            string code = @"
-//int? capturedArg = null;
+        //        [TestMethod]
+        //        public void CallbackTest()
+        //        {
+        //            //Arrange
+        //            Conversion conversion = new();
+        //            string code = @"
+        //int? capturedArg = null;
 
-//mock
-//  .Setup(x => x.MyMethod(It.IsAny<int>(), It.IsAny<string>()))
-//  .Returns(true)
-//  .Callback((int i, string s) => capturedArg = i);";
+        //mock
+        //  .Setup(x => x.MyMethod(It.IsAny<int>(), It.IsAny<string>()))
+        //  .Returns(true)
+        //  .Callback((int i, string s) => capturedArg = i);";
 
-//            //Act
-//            ConversionResponse result = conversion.
-//                ConvertMoqToNSubstitute(code);
+        //            //Act
+        //            ConversionResponse result = conversion.
+        //                ConvertMoqToNSubstitute(code);
 
-//            //Assert
-//            string expected = @"
-//int? capturedArg = null;
+        //            //Assert
+        //            string expected = @"
+        //int? capturedArg = null;
 
-//mock
-//  .MyMethod(Arg.Do<int>(i => capturedArg = i), Arg.Any<string>())
-//  .Returns(true);
-//";
-//            Assert.AreEqual(expected, result.ConvertedCode);
-//        }
+        //mock
+        //  .MyMethod(Arg.Do<int>(i => capturedArg = i), Arg.Any<string>())
+        //  .Returns(true);
+        //";
+        //            Assert.AreEqual(expected, result.ConvertedCode);
+        //        }
+
+
+        [TestMethod]
+        public void UsingNullInputTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string? code = null;
+
+            //Act
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"";
+            Assert.AreEqual(expected, result.ConvertedCode);
+        }
 
     }
 }
