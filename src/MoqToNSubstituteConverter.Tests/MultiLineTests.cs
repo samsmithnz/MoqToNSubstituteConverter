@@ -1,9 +1,9 @@
 ﻿namespace MoqToNSubstituteConverter.Tests
 {
     [TestClass]
-    public class SingleLineTests
+    public class MultiLineTests
     {
-
+       
         [TestMethod]
         public void SingleLineOnMultipleLinesTest()
         {
