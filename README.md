@@ -8,4 +8,4 @@ Please log issues if you find any problems.
 To use, browse to [MoqToNSubstitute.AzureWebsites.Net](https://moqtonsubstitute.azurewebsites.net)
 
 ## Current limitations:
-- Likely doesn't handle code spread over multiple lines. I think we can solve this with Roslyn and the code analyzer, to identify full lines (spread over multiple).
+- See issues
