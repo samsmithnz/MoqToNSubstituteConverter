@@ -135,14 +135,14 @@ mock.Received(3).Transform(Arg.Any<string>());
             //Arrange
             Conversion conversion = new();
             string code = @"
-mock.Verify(x => x.Method(), Times.Never);";
+mock.Verify(x => x.Method(It.IsAny<int>(), It.IsAny<int>()), Times.Never);";
 
             //Act
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
             string expected = @"
-mock.DidNotReceive().Method();
+mock.DidNotReceive().Method(Arg.Any<int>(), Arg.Any<int>());
 ";
             Assert.AreEqual(expected, result.ConvertedCode);
         }

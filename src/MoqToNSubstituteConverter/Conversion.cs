@@ -165,7 +165,7 @@ public class Conversion
             }
             else if (code.Contains(", Times.Never)"))
             {
-                code = code.Replace(", Times.Never)", ".DidNotReceive()");
+                code = code.Replace(", Times.Never)", "");
                 timesExactlyValue = 0;
             }
             else if (code.Contains(", Times.Exactly("))
@@ -186,7 +186,11 @@ public class Conversion
             {
                 code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received(" + timesExactlyValue + ")");
             }
-            else if(timesExactlyValue == 1)
+            else if (timesExactlyValue == 0)
+            {
+                code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".DidNotReceive()");
+            }
+            else
             {
                 code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received()");
             }
