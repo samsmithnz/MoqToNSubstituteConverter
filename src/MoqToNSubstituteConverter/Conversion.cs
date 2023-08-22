@@ -107,9 +107,21 @@ public class Conversion
             // Extract the text between square brackets
             string variableText = match.Groups[1].Value;
             code = code.Replace("Mock<" + variableText + ">", variableText);
-            if (foundMock == true && code.Contains("new()"))
+        }
+
+        //Process the implicit variable declaration
+        if (foundMock == true && code.Contains("new()"))
+        {
+            string pattern2 = @"Mock\<(.*?)\>";
+            MatchCollection matches2 = Regex.Matches(code, pattern2);
+            foreach (Match match in matches2)
             {
-                code = code.Replace("New()", "Substitute.For<" + variableText + ">()");
+                // Extract the text between square brackets
+                string variableText = match.Groups[1].Value;
+                if (foundMock == true && code.Contains("new()"))
+                {
+                    code = code.Replace("new()", "Substitute.For<" + variableText + ">()");
+                }
             }
         }
 
