@@ -158,13 +158,17 @@ public class Conversion
             string extractedText = verifyMatch.Groups[1].Value.Trim();
 
             //Replace the times exactly piece
-            code = code.Replace(", Times.Once)", "");
-            if (code.Contains(", Times.Never)"))
+            if (code.Contains(", Times.Once)"))
             {
-                code = code.Replace(", Times.Never)", ".Received()");
+                code = code.Replace(", Times.Once)", "");
+                timesExactlyValue = 1;
+            }
+            else if (code.Contains(", Times.Never)"))
+            {
+                code = code.Replace(", Times.Never)", ".DidNotReceive()");
                 timesExactlyValue = 0;
             }
-            if (code.Contains(", Times.Exactly("))
+            else if (code.Contains(", Times.Exactly("))
             {
                 //Find the number of times exactly
                 string timesExactlyPattern = @"Times.Exactly\((.*?)\)";
@@ -182,11 +186,7 @@ public class Conversion
             {
                 code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received(" + timesExactlyValue + ")");
             }
-            else if (timesExactlyValue == 0)
-            {
-                code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".DidNotReceive()");
-            }
-            else
+            else if(timesExactlyValue == 1)
             {
                 code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received()");
             }
