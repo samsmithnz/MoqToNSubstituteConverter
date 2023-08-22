@@ -272,5 +272,21 @@ mock
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
+        [TestMethod]
+        public void ThrowsTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string? code = @"mock.Setup(x => x.Method()).Throws(new ArgumentException());";
+
+            //Act
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"mock.Method().Throws(new ArgumentException());
+";
+            Assert.AreEqual(expected, result.ConvertedCode);
+        }
+
     }
 }
