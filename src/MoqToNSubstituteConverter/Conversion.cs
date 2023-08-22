@@ -182,7 +182,7 @@ public class Conversion
             }
 
             //Add the received section, with the times exactly if it's more than 1
-            if (timesExactlyValue > 0)
+            if (timesExactlyValue > 1)
             {
                 code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received(" + timesExactlyValue + ")");
             }
