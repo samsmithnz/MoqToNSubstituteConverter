@@ -88,7 +88,13 @@ public class Conversion
 
     private static string ProcessVariableDeclaration(string code)
     {
+        bool foundMock = false;
+
         //Update variable declarations
+        if (code.Contains("Mock<"))
+        {
+            foundMock = true;
+        }
         code = code.Replace("new Mock<", "Substitute.For<");
 
         //Find the interface
@@ -101,6 +107,10 @@ public class Conversion
             // Extract the text between square brackets
             string variableText = match.Groups[1].Value;
             code = code.Replace("Mock<" + variableText + ">", variableText);
+            if (foundMock == true && code.Contains("new()"))
+            {
+                code = code.Replace("New()", "Substitute.For<" + variableText + ">()");
+            }
         }
 
         return code;
