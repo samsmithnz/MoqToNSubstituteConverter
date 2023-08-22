@@ -40,6 +40,42 @@ IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
         }
 
         [TestMethod]
+        public void InitializeVariableWithVarTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string code = @"
+var mockConfiguration = new Mock<IConfiguration>();";
+
+            //Act
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"
+var mockConfiguration = Substitute.For<IConfiguration>();
+";
+            Assert.AreEqual(expected, result.ConvertedCode);
+        }
+
+        [TestMethod]
+        public void InitializeVariableWithNewTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string code = @"
+Mock<IConfiguration> mockConfiguration = new();";
+
+            //Act
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"
+IConfiguration mockConfiguration = Substitute.For<IConfiguration>();
+";
+            Assert.AreEqual(expected, result.ConvertedCode);
+        }
+
+        [TestMethod]
         public void ObjectTest()
         {
             //Arrange
