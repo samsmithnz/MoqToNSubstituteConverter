@@ -247,8 +247,8 @@ mock
             ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
 
             //Assert
-            string expected = @"
-mock.Method().Throws(new ArgumentException());";
+            string expected = @"mock.Method().Throw(new ArgumentException());
+";
             Assert.AreEqual(expected, result.ConvertedCode);
         }
 
