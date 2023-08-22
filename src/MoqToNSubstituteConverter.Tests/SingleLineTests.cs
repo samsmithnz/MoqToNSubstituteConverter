@@ -130,6 +130,24 @@ mock.Received(3).Transform(Arg.Any<string>());
         }
 
         [TestMethod]
+        public void VerifyTimesNeverTest()
+        {
+            //Arrange
+            Conversion conversion = new();
+            string code = @"
+mock.Verify(x => x.Method(), Times.Never);";
+
+            //Act
+            ConversionResponse result = conversion.ConvertMoqToNSubstitute(code);
+
+            //Assert
+            string expected = @"
+mock.DidNotReceive().Method();
+";
+            Assert.AreEqual(expected, result.ConvertedCode);
+        }
+
+        [TestMethod]
         public void InvocationsClearTest()
         {
             //Arrange

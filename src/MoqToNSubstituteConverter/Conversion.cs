@@ -159,6 +159,11 @@ public class Conversion
 
             //Replace the times exactly piece
             code = code.Replace(", Times.Once)", "");
+            if (code.Contains(", Times.Never)"))
+            {
+                code = code.Replace(", Times.Never)", ".Received()");
+                timesExactlyValue = 0;
+            }
             if (code.Contains(", Times.Exactly("))
             {
                 //Find the number of times exactly
@@ -176,6 +181,10 @@ public class Conversion
             if (timesExactlyValue > 0)
             {
                 code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".Received(" + timesExactlyValue + ")");
+            }
+            else if (timesExactlyValue == 0)
+            {
+                code = code.Replace(".Verify(" + extractedText + " => " + extractedText, ".DidNotReceive()");
             }
             else
             {
