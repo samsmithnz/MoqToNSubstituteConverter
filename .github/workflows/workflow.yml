@@ -31,7 +31,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: .NET test
       run: dotnet test src/MoqToNSubstituteConverter.Tests/MoqToNSubstituteConverter.Tests.csproj -c Release
     - name: .NET publish
@@ -40,7 +40,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: webapp
-        path: src/MoqToNSubstituteConverter.Web/bin/Release/net7.0/publish
+        path: src/MoqToNSubstituteConverter.Web/bin/Release/net8.0/publish
 
 
   #Deploy the artifacts to Azure
