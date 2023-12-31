@@ -37,7 +37,7 @@ jobs:
     - name: .NET publish
       run: dotnet publish src/MoqToNSubstituteConverter.Web/MoqToNSubstituteConverter.Web.csproj -c Release -p:Version='${{ steps.gitversion.outputs.SemVer }}'
     - name: Upload package back to GitHub
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: webapp
         path: src/MoqToNSubstituteConverter.Web/bin/Release/net8.0/publish
@@ -60,7 +60,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_SP }}
     - name: Download webapp artifact #Download the artifacts from GitHub
-      uses: actions/download-artifact@v3.0.2
+      uses: actions/download-artifact@v4.1.0
       with:
         name: webapp
         path: webapp
